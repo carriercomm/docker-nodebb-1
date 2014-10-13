@@ -1,0 +1,44 @@
+#!/bin/bash
+
+NODEBB="/nodebb"
+OVERRIDE="/nodebb-override"
+
+CONFIG="config.json"
+PUBLIC="public"
+UPLOADS="public/uploads"
+THEME_IMAGES="public/images"
+PLUGINS="node_modules"
+LOGS="logs"
+
+mkdir -p "$OVERRIDE/$PUBLIC"
+cd "$NODEBB"
+
+# Symlink uploads directory.
+mv -f "$UPLOADS" "$OVERRIDE/$UPLOADS"
+ln -s "$OVERRIDE/$UPLOADS" "$UPLOADS"
+
+# Symlink images directory.
+mv -f "$PUBLIC/favicon.ico" "$OVERRIDE/$PUBLIC/"
+mv -f "$PUBLIC/logo.png" "$OVERRIDE/$PUBLIC/"
+ln -s "$OVERRIDE/$PUBLIC/favicon.ico" "$PUBLIC/"
+ln -s "$OVERRIDE/$PUBLIC/logo.png" "$PUBLIC/"
+
+# Symlink theme images directory.
+mv -f "$THEME_IMAGES" "$OVERRIDE/$THEME_IMAGES"
+ln -s "$OVERRIDE/$THEME_IMAGES" "$THEME_IMAGES"
+
+# Symlink plugins directory
+mv -f "$PLUGINS" "$OVERRIDE/$PLUGINS"
+ln -s "$OVERRIDE/$PLUGINS" "$PLUGINS"
+
+# Symlink config file.
+mv -f "$CONFIG" "$OVERRIDE/$CONFIG"
+ln -s "$OVERRIDE/$CONFIG" "$CONFIG"
+
+# Symlink logs directory.
+mv -f "$LOGS" "$OVERRIDE/$LOGS"
+ln -s "$OVERRIDE/$LOGS" "$LOGS"
+
+# Start NodeBB
+cd "$NODEBB"
+node app.js
