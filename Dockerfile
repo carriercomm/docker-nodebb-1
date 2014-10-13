@@ -23,7 +23,7 @@ RUN \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /var/tmp/*
 
 # Add files.
-ADD start.bash /nodebb-start
+ADD start /nodebb-start
 
 # Define mountable directories.
 VOLUME ["/nodebb", "/nodebb-override"]
