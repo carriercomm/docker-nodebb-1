@@ -7,36 +7,57 @@ CONFIG="config.json"
 PUBLIC="public"
 UPLOADS="public/uploads"
 THEME_IMAGES="public/images"
-PLUGINS="node_modules"
+MODULES="node_modules"
 LOGS="logs"
 
 mkdir -p "$OVERRIDE/$PUBLIC"
 cd "$NODEBB"
 
 # Symlink uploads directory.
-mv -f "$UPLOADS" "$OVERRIDE/$UPLOADS"
+if [ ! -f "$OVERRIDE/$UPLOADS" ]; then
+cp -rf "$UPLOADS" "$OVERRIDE/$UPLOADS" 
+fi
+rm -rf "$UPLOADS"
 ln -s "$OVERRIDE/$UPLOADS" "$UPLOADS"
 
-# Symlink images directory.
-mv -f "$PUBLIC/favicon.ico" "$OVERRIDE/$PUBLIC/"
-mv -f "$PUBLIC/logo.png" "$OVERRIDE/$PUBLIC/"
+# Symlink images.
+if [ ! -f "$OVERRIDE/$PUBLIC/favicon.ico" ]; then
+cp -rf "$PUBLIC/favicon.ico" "$OVERRIDE/$PUBLIC/" 
+fi
+if [ ! -f "$OVERRIDE/$PUBLIC/logo.png" ]; then
+cp -rf "$PUBLIC/logo.png" "$OVERRIDE/$PUBLIC/" 
+fi
+rm -rf "$PUBLIC/favicon.ico"
+rm -rf "$PUBLIC/logo.png"
 ln -s "$OVERRIDE/$PUBLIC/favicon.ico" "$PUBLIC/"
 ln -s "$OVERRIDE/$PUBLIC/logo.png" "$PUBLIC/"
 
 # Symlink theme images directory.
-mv -f "$THEME_IMAGES" "$OVERRIDE/$THEME_IMAGES"
+if [ ! -f "$OVERRIDE/$THEME_IMAGES" ]; then
+cp -rf "$THEME_IMAGES" "$OVERRIDE/$THEME_IMAGES" 
+fi
+rm -rf "$THEME_IMAGES"
 ln -s "$OVERRIDE/$THEME_IMAGES" "$THEME_IMAGES"
 
-# Symlink plugins directory
-mv -f "$PLUGINS" "$OVERRIDE/$PLUGINS"
-ln -s "$OVERRIDE/$PLUGINS" "$PLUGINS"
+# Symlink plugins directory.
+if [ ! -f "$OVERRIDE/$MODULES" ]; then
+cp -rf "$MODULES" "$OVERRIDE/$MODULES" 
+fi
+rm -rf "$MODULES"
+ln -s "$OVERRIDE/$MODULES" "$MODULES"
 
 # Symlink config file.
-mv -f "$CONFIG" "$OVERRIDE/$CONFIG"
-ln -s "$OVERRIDE/$CONFIG" "$CONFIG"
+if [ -f "$CONFIG" ]; then
+cp -rf "$CONFIG" "$OVERRIDE/$CONFIG"
+rm -rf "$CONFIG"
+ln -s "$OVERRIDE/$CONFIG" "$CONFIG" 
+fi
 
 # Symlink logs directory.
-mv -f "$LOGS" "$OVERRIDE/$LOGS"
+if [ -f "$LOGS" ]; then
+cp -rf "$LOGS" "$OVERRIDE/$LOGS" 
+fi
+rm -rf "$LOGS"
 ln -s "$OVERRIDE/$LOGS" "$LOGS"
 
 # Start NodeBB
