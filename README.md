@@ -2,7 +2,7 @@
 
 This repository contains the **Dockerfile** of [NodeBB](https://nodebb.org/) for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/morphy/nodebb/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
 
-Inspired at [nickjanssen/docker-nodebb](https://github.com/morphy2k/docker-nodebb) and [dockerfile/ghost](https://github.com/dockerfile/ghost).
+*Inspired at [nickjanssen/docker-nodebb](https://github.com/morphy2k/docker-nodebb) and [dockerfile/ghost](https://github.com/dockerfile/ghost).*
 
 ### Base Docker Image
 
