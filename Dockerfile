@@ -5,14 +5,14 @@
 #
 
 # Pull base image.
-FROM dockerfile/nodejs
+FROM node:slim
 
 MAINTAINER Markus Wiegand <mail@morphy.info>
 
 # Install packages
-RUN	apt-get update
-RUN	apt-get install imagemagick -y
-
+RUN apt-get update
+RUN apt-get install imagemagick -y
+	
 # Install NodeBB
 RUN \	
 	git clone -b v0.5.x https://github.com/NodeBB/NodeBB.git /nodebb && \
@@ -23,7 +23,7 @@ RUN \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /var/tmp/*
 
 # Add files.
-ADD start /nodebb-start
+ADD run /nodebb-start
 
 # Define mountable directories.
 VOLUME ["/nodebb", "/nodebb-override"]
