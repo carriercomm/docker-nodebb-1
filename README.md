@@ -4,7 +4,7 @@ This repository contains the **Dockerfile** of [NodeBB](https://nodebb.org/) for
 
 ### Base Docker Image
 
-* [dockerfile/nodejs](http://dockerfile.github.io/#/nodejs)
+* [node:slim](https://registry.hub.docker.com/_/node/)
 
 ### Installation
 
