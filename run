@@ -1,0 +1,65 @@
+#!/bin/bash
+
+NODEBB="/nodebb"
+OVERRIDE="/nodebb-override"
+
+CONFIG="config.json"
+PUBLIC="public"
+UPLOADS="public/uploads"
+MODULES="node_modules"
+LOGS="logs"
+
+cd "$NODEBB"
+
+# Create public directory.
+if [ ! -d "$OVERRIDE/$PUBLIC" ]; then
+mkdir "$OVERRIDE/$PUBLIC"
+fi
+
+# Symlink uploads directory.
+if [ ! -d "$OVERRIDE/$UPLOADS" ]; then
+	cp -rf "$UPLOADS" "$OVERRIDE/$PUBLIC" 
+fi
+rm -rf "$UPLOADS"
+ln -s "$OVERRIDE/$UPLOADS" "$UPLOADS"
+
+# Symlink logo and favicon image.
+if [ ! -f "$OVERRIDE/$PUBLIC/favicon.ico" ]; then
+	cp -rf "$PUBLIC/favicon.ico" "$OVERRIDE/$PUBLIC" 
+fi
+if [ ! -f "$OVERRIDE/$PUBLIC/logo.png" ]; then
+	cp -rf "$PUBLIC/logo.png" "$OVERRIDE/$PUBLIC" 
+fi
+if [ -f "$OVERRIDE/$PUBLIC/site-logo.png" ]; then
+	ln -s "$OVERRIDE/$PUBLIC/site-logo.png" "$PUBLIC/site-logo.png" 
+fi
+rm -rf "$PUBLIC/favicon.ico" "$PUBLIC/logo.png"
+ln -s "$OVERRIDE/$PUBLIC/favicon.ico" "$PUBLIC/favicon.ico"
+ln -s "$OVERRIDE/$PUBLIC/logo.png" "$PUBLIC/logo.png"
+ 
+# Symlink modules directory.
+if [ ! -d "$OVERRIDE/$MODULES" ]; then
+	cp -rf "$MODULES" "$OVERRIDE/$MODULES"
+fi
+rm -rf "$MODULES"
+ln -s "$OVERRIDE/$MODULES" "$MODULES"
+
+# Symlink config file.
+if [ -f "$CONFIG" ]; then
+	cp -rf "$CONFIG" "$OVERRIDE/$CONFIG"
+	rm -rf "$CONFIG"
+fi
+ln -s "$OVERRIDE/$CONFIG" "$CONFIG"
+
+# Symlink logs directory.
+if [ ! -d "$OVERRIDE/$LOGS" ]; then
+	mkdir "$OVERRIDE/$LOGS"
+fi
+rm -rf "$LOGS"
+ln -s "$OVERRIDE/$LOGS" "$LOGS"
+
+# Start upgrade script
+./nodebb upgrade
+
+# Start NodeBB
+node app
